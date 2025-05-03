@@ -11,6 +11,7 @@ Options:
 2. `0`: Sets the value as `0`.
    
 **Blanks:** This handles dates without entries for that category. 
+
 Options:
 1. `Skip`: Selects the lowest value in the available data.
 2. `0`: Sets the value as `0`.
@@ -18,6 +19,7 @@ Options:
 4. `Default`: Sets the value as the default value for that data category.
 
 **Value:** This sets what number is used for the graph if you are using a complex field such as a complex number with entries such as `10*9*1`.
+
 Options:
 1. `Output`: Selects the output of the data entry value. In the `10*9*1` example, it would be `90`.
 2. `# 1`: Sets the value as the first number. In the `10*9*1` example, it would be `10`.
@@ -25,6 +27,7 @@ Options:
 4. `# 3`: Sets the value as the first number. In the `10*9*1` example, it would be `1`.
 
 **Line Style:** This sets the specific style of the line. 
+
 Options:
 1. `Default`
 2. `Stepped`
