@@ -1,7 +1,9 @@
 # Graphs
 Data Tracker has several graphs with various options. Click the `Graph` icon on the bottom menu to see the line graph. Scroll down all the way to see the other supported graphs. 
 
-## Line Graph Options
+## Graph Options
+The line graph has the most options, and all other graphs have a subset of the line graph options pictured below.
+
 ![image](https://github.com/user-attachments/assets/5f215e21-6588-4e2e-8f78-be3e1015cd50)
 
 **Minimum Value:** This sets the lowest value on the veritical Y axis for the respective category.
