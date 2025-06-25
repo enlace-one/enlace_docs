@@ -40,7 +40,7 @@ Subject: Meeting Reminder
 Message-ID: <1234567890@dundermifflin.com>
 
 ### Sample Email breakdown
-1. The "Return-Path domain" is used for SPF
+1. The "Return-Path domain" is used for SPF. In general, it designates the email address where bounced messages and other feedback are sent.
 2. The "DKIM Signature domain" is used for DKIM
 3. The "From domain" is used for DMARC, to check the alignment compared to the above two.
 
