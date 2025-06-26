@@ -117,6 +117,18 @@ v=spf1 ip4:192.0.2.0/24 ip6:2001:db8::/32 include:mailgun.org ~all
 - `-all`: Hard fail (reject).
 - `+all`: Allow any server (not recommended).
 
+## More About DKIM
+
+### DKIM Selectors
+
+In the example email, you may recall the below line
+
+```DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dundermifflin.com; h=From:To:Subject:Date:Message-ID; s=default; bh=abc123...; b=def456...```
+
+The selector in this example is default as designated by s=default, but you may see something like `s1` or a random alphanumeric string. 
+
+This, combined with the d=dundermifflin.com attribute, is what is used to check the DKIM record. In this example, it would check default._domainkey.dundermufflin.com. 
+
 # Frequently Asked Questions (FAQs)
 
 ## What happens if the SPF policy is not set but DMARC is p=quarantine or p=reject? 
@@ -136,4 +148,7 @@ It seems most internet sources say that subdomains inherit from their parent dom
 Example:
 - company.org is set to `p=reject`
 - subsidiary.company.org is set to `p=quarantine`
-- Then comms.subsidiary.company.org will be set to `p=reject` according to my experience despite internet sources. 
+- Then comms.subsidiary.company.org will be set to `p=reject` according to my experience despite internet sources.
+
+# Further Reading
+[Dmarcly](https://dmarcly.com/blog/how-to-implement-dmarc-dkim-spf-to-stop-email-spoofing-phishing-the-definitive-guide#anatomy-of-an-email-message)
