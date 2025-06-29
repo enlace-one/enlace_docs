@@ -13,36 +13,29 @@
 
 *Access this link to see the most updated version: [Canva](https://www.canva.com/design/DAGS70X--Bs/DUmDxfXvxUq2B9UZrjnN1g/view?utm_content=DAGS70X--Bs&utm_campaign=designshare&utm_medium=link&utm_source=editor)*
 
-## Authentication Checks
-So what exactly are the authentication checks? 
+## Terms
+It may be useful to see the sample email headers below while viewing this.
 
-Take the below email as an example. 
+1. **The Enveloper From Address:** The envelope from address is used in the SMTP transaction and not directly in the headers, but is usually written to the "Return-Path domain".
+2. **The Return-Path domain:** In general, the Return-Path designates the email address where bounced messages and other feedback are sent.
 
-### Sample Email
-Return-Path: <jane@**dundermifflin.com**> **(1)**
+### Sample Email Headers
+![Email Headers](https://github.com/user-attachments/assets/82dc3d3c-8e6a-4801-9737-5b8d33da1812)
 
-Delivered-To: <michael@saber.com>
+*Access this link to see the most updated version: [Canva](https://www.canva.com/design/DAGrwMkfaUo/S6fQtf5M2OVyYp2SnYzCzw/view?utm_content=DAGrwMkfaUo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h47ea67f1d8)*
 
-Authentication-Results: mail.dundermifflin.com;
-    spf=pass (saber.com: domain of jane@dundermifflin.com designates 1.2.3.4 as a permitted sender) smtp.mailfrom=jane@dundermifflin.com;
-    dkim=pass header.i=dundermifflin.com
-    
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=**dundermifflin.com**; **(2)** h=From:To:Subject:Date:Message-ID; s=default; bh=abc123...; b=def456...
+## Authentication Check
+So what exactly is the authentication check? 
 
-Date: Mon, 7 Oct 2024 16:30:00 -0400
+To pass DMARC, either SPF or DKIM has to verify and pass alignment. 
 
-From: Jane Doe <jane@**dundermifflin.com**> **(3)**
+1. SPF
+- For SPF to verify, the sending IP must be listed in the SPF record of the envelope from address.
+- For SPF to align, the header from address must match the envelope address (generally in the return path header). 
 
-To: Michael Scott <michael@saber.com>
-
-Subject: Meeting Reminder
-
-Message-ID: <1234567890@dundermifflin.com>
-
-### Sample Email breakdown
-1. The "Return-Path domain" is used for SPF. In general, it designates the email address where bounced messages and other feedback are sent.
-2. The "DKIM Signature domain" is used for DKIM
-3. The "From domain" is used for DMARC, to check the alignment compared to the above two.
+2. DKIM
+- For DKIM to pass, the hash of the specified fields must match the hash that is decrypted from the DKIM signature using the public key of the domain. 
+- For DKIM to align, the "d=" domain in the DKIM signature must match the header from address. 
 
 # Advanced
 
