@@ -40,18 +40,13 @@ To pass DMARC, either SPF or DKIM has to verify and pass alignment.
 # Advanced
 
 ## Alignment
-There are generally two types of alignment set in the DMARC record.
+There are generally two types of alignment set in the DMARC record and they could be different for SPF than for DKIM. See the example records to see where those are set.
 
 Strict means the domains must match exactly.
 
-Relaxed includes the exact domain as well as subdomains. 
+Relaxed includes the organizational domain as well as subdomains. 
 
-
-### SPF Alignment
-DMARC checks if the From domain aligns with the Return-Path domain.
-
-### DKIM Alignment
-DMARC checks if the domain in the From domain aligns with the DKIM Signature domain.
+The organizational domain is the top-level domain plus the second-level domain, so for `mail.example.com` it's `example.com`. 
 
 ## Example Records
 
@@ -98,7 +93,23 @@ The domain used in the Host field (default._domainkey.example.com) is a combinat
 ```
 v=spf1 ip4:192.0.2.0/24 ip6:2001:db8::/32 include:mailgun.org ~all
 ```
+
 `v=spf1`: Specifies the SPF version.
+
+The record contains a list, each list item has the action to take or qualifiar, the type of identifiar or mechanism, and the identifiar itself such as an IP address.
+
+#### SPF Record Qualifiars
+`+`: PASS
+
+`?`: NEUTRAL
+
+`~`: SOFTFAIL
+
+`-`: FAIL
+
+The qualifiar is not always listed, if left out it's `+` or pass.
+
+#### SPF Record Mechanisms
 
 `ip4:192.0.2.0/24`: Authorizes this IPv4 address range to send emails.
 
@@ -106,9 +117,11 @@ v=spf1 ip4:192.0.2.0/24 ip6:2001:db8::/32 include:mailgun.org ~all
 
 `include:mailgun.org`: Authorizes Mailgun (third-party email service) to send emails for this domain.
 
-`~all`: Soft fail for any server not listed in the SPF record. Other options:
-- `-all`: Hard fail (reject).
-- `+all`: Allow any server (not recommended).
+`A`: Include all IPs in the A or AAAA records of the checked domain.
+
+`MX`: Include all IPs in the MX records of the checked domain.
+
+`~all`: Soft fail for any server not listed in the SPF record. 
 
 ## More About DKIM
 
@@ -118,9 +131,9 @@ In the example email, you may recall the below line
 
 ```DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dundermifflin.com; h=From:To:Subject:Date:Message-ID; s=default; bh=abc123...; b=def456...```
 
-The selector in this example is default as designated by s=default, but you may see something like `s1` or a random alphanumeric string. 
+The selector in this example is default as designated by `s=default`, but you may see something like `s1` or a random alphanumeric string. 
 
-This, combined with the d=dundermifflin.com attribute, is what is used to check the DKIM record. In this example, it would check default._domainkey.dundermufflin.com. 
+This, combined with the `d=dundermifflin.com` attribute, is what is used to check the DKIM record. In this example, it would check `default._domainkey.dundermufflin.com`
 
 # Frequently Asked Questions (FAQs)
 
