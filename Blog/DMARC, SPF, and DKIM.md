@@ -135,6 +135,23 @@ The selector in this example is default as designated by `s=default`, but you ma
 
 This, combined with the `d=dundermifflin.com` attribute, is what is used to check the DKIM record. In this example, it would check `default._domainkey.dundermufflin.com`
 
+## More About SPF
+
+### SPF Macros
+Take the below example SPF record:
+
+```v=spf1 include:%{i}_.%{d}._spf.dundermifflin.com ~all```
+
+Using the below variables, we could determine that the SPF record includes the SPF of `1.1.1.1_.dundermifflin._spf.dundermifflin.com` if the IP of the sender was 1.1.1.1 and the envelope from is dundermifflin.com. 
+
+Variables:
+- `%{s}`: The sender’s email address. Example- Jane@dundermifflin.com.
+- `%{l}`: The part before @ in the sender's email address. Example- Jane.
+- `%{o}`: The sender’s domain. Example: dundermifflin.com.
+- `%{d}`: The envelope from domain. 
+- `%{i}`: The IP address of the sender of the message, e.g. 192.168.1.100 
+- `%{h}`: The hostname specified by the HELO or EHLO command used during the SMTP connection when the message is being sent is referred to by the %{h} macro
+
 # Frequently Asked Questions (FAQs)
 
 ## What happens if the SPF policy is not set but DMARC is p=quarantine or p=reject? 
