@@ -13,52 +13,40 @@
 
 *Access this link to see the most updated version: [Canva](https://www.canva.com/design/DAGS70X--Bs/DUmDxfXvxUq2B9UZrjnN1g/view?utm_content=DAGS70X--Bs&utm_campaign=designshare&utm_medium=link&utm_source=editor)*
 
-## Authentication Checks
-So what exactly are the authentication checks? 
+## Terms
+It may be useful to see the sample email headers below while viewing this.
 
-Take the below email as an example. 
+1. **The Enveloper From Address:** The envelope from address is used in the SMTP transaction and not directly in the headers, but is usually written to the "Return-Path domain".
+2. **The Return-Path domain:** In general, the Return-Path designates the email address where bounced messages and other feedback are sent.
 
-### Sample Email
-Return-Path: <jane@**dundermifflin.com**> **(1)**
+### Sample Email Headers
+![Email Headers](https://github.com/user-attachments/assets/82dc3d3c-8e6a-4801-9737-5b8d33da1812)
 
-Delivered-To: <michael@saber.com>
+*Access this link to see the most updated version: [Canva](https://www.canva.com/design/DAGrwMkfaUo/S6fQtf5M2OVyYp2SnYzCzw/view?utm_content=DAGrwMkfaUo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h47ea67f1d8)*
 
-Authentication-Results: mail.dundermifflin.com;
-    spf=pass (saber.com: domain of jane@dundermifflin.com designates 1.2.3.4 as a permitted sender) smtp.mailfrom=jane@dundermifflin.com;
-    dkim=pass header.i=dundermifflin.com
-    
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=**dundermifflin.com**; **(2)** h=From:To:Subject:Date:Message-ID; s=default; bh=abc123...; b=def456...
+## Authentication Check
+So what exactly is the authentication check? 
 
-Date: Mon, 7 Oct 2024 16:30:00 -0400
+To pass DMARC, either SPF or DKIM has to verify and pass alignment. 
 
-From: Jane Doe <jane@**dundermifflin.com**> **(3)**
+1. SPF
+- For SPF to verify, the sending IP must be listed in the SPF record of the envelope from address.
+- For SPF to align, the header from address must match the envelope address (generally in the return path header). 
 
-To: Michael Scott <michael@saber.com>
-
-Subject: Meeting Reminder
-
-Message-ID: <1234567890@dundermifflin.com>
-
-### Sample Email breakdown
-1. The "Return-Path domain" is used for SPF
-2. The "DKIM Signature domain" is used for DKIM
-3. The "From domain" is used for DMARC, to check the alignment compared to the above two.
+2. DKIM
+- For DKIM to pass, the hash of the specified fields must match the hash that is decrypted from the DKIM signature using the public key of the domain. 
+- For DKIM to align, the "d=" domain in the DKIM signature must match the header from address. 
 
 # Advanced
 
 ## Alignment
-There are generally two types of alignment set in the DMARC record.
+There are generally two types of alignment set in the DMARC record and they could be different for SPF than for DKIM. See the example records to see where those are set.
 
 Strict means the domains must match exactly.
 
-Relaxed includes the exact domain as well as subdomains. 
+Relaxed includes the organizational domain as well as subdomains. 
 
-
-### SPF Alignment
-DMARC checks if the From domain aligns with the Return-Path domain.
-
-### DKIM Alignment
-DMARC checks if the domain in the From domain aligns with the DKIM Signature domain.
+The organizational domain is the top-level domain plus the second-level domain, so for `mail.example.com` it's `example.com`. 
 
 ## Example Records
 
@@ -105,7 +93,23 @@ The domain used in the Host field (default._domainkey.example.com) is a combinat
 ```
 v=spf1 ip4:192.0.2.0/24 ip6:2001:db8::/32 include:mailgun.org ~all
 ```
+
 `v=spf1`: Specifies the SPF version.
+
+The record contains a list, each list item has the action to take or qualifiar, the type of identifiar or mechanism, and the identifiar itself such as an IP address.
+
+#### SPF Record Qualifiars
+`+`: PASS
+
+`?`: NEUTRAL
+
+`~`: SOFTFAIL
+
+`-`: FAIL
+
+The qualifiar is not always listed, if left out it's `+` or pass.
+
+#### SPF Record Mechanisms
 
 `ip4:192.0.2.0/24`: Authorizes this IPv4 address range to send emails.
 
@@ -113,9 +117,40 @@ v=spf1 ip4:192.0.2.0/24 ip6:2001:db8::/32 include:mailgun.org ~all
 
 `include:mailgun.org`: Authorizes Mailgun (third-party email service) to send emails for this domain.
 
-`~all`: Soft fail for any server not listed in the SPF record. Other options:
-- `-all`: Hard fail (reject).
-- `+all`: Allow any server (not recommended).
+`A`: Include all IPs in the A or AAAA records of the checked domain.
+
+`MX`: Include all IPs in the MX records of the checked domain.
+
+`~all`: Soft fail for any server not listed in the SPF record. 
+
+## More About DKIM
+
+### DKIM Selectors
+
+In the example email, you may recall the below line
+
+```DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dundermifflin.com; h=From:To:Subject:Date:Message-ID; s=default; bh=abc123...; b=def456...```
+
+The selector in this example is default as designated by `s=default`, but you may see something like `s1` or a random alphanumeric string. 
+
+This, combined with the `d=dundermifflin.com` attribute, is what is used to check the DKIM record. In this example, it would check `default._domainkey.dundermufflin.com`
+
+## More About SPF
+
+### SPF Macros
+Take the below example SPF record:
+
+```v=spf1 include:%{i}_.%{d}._spf.dundermifflin.com ~all```
+
+Using the below variables, we could determine that the SPF record includes the SPF of `1.1.1.1_.dundermifflin._spf.dundermifflin.com` if the IP of the sender was 1.1.1.1 and the envelope from is dundermifflin.com. 
+
+Variables:
+- `%{s}`: The sender’s email address. Example- Jane@dundermifflin.com.
+- `%{l}`: The part before @ in the sender's email address. Example- Jane.
+- `%{o}`: The sender’s domain. Example: dundermifflin.com.
+- `%{d}`: The envelope from domain. 
+- `%{i}`: The IP address of the sender of the message, e.g. 192.168.1.100 
+- `%{h}`: The hostname specified by the HELO or EHLO command used during the SMTP connection when the message is being sent is referred to by the %{h} macro
 
 # Frequently Asked Questions (FAQs)
 
@@ -136,4 +171,7 @@ It seems most internet sources say that subdomains inherit from their parent dom
 Example:
 - company.org is set to `p=reject`
 - subsidiary.company.org is set to `p=quarantine`
-- Then comms.subsidiary.company.org will be set to `p=reject` according to my experience despite internet sources. 
+- Then comms.subsidiary.company.org will be set to `p=reject` according to my experience despite internet sources.
+
+# Further Reading
+[Dmarcly](https://dmarcly.com/blog/how-to-implement-dmarc-dkim-spf-to-stop-email-spoofing-phishing-the-definitive-guide#anatomy-of-an-email-message)
