@@ -1,9 +1,16 @@
 # SOCX Command Line Tool Version History
 
-## Version 2.4.0
-Published to pypi.org: 
+## Version 2.4.1
+Published to pypi.org: TBD
 
-Published to test.pypi.org: 
+Published to test.pypi.org: 2 November 2025
+
+Added the unzip action which can unzip several zips into the directory they reside in.
+
+## Version 2.4.0
+Published to pypi.org: 1 November 2025
+
+Published to test.pypi.org: 1 November 2025
 
 Added dependencies so they are installed automatically when SOCX is. 
 
