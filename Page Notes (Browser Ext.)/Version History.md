@@ -1,7 +1,7 @@
 # Page Notes Version History
 
 ## 5.4 
-Released: TBD
+Released: 3.30.2026
 
 In this release:
 - Added Tab Manager which includes automatic tab refreshing, revolving, and closing
