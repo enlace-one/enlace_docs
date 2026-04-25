@@ -1,8 +1,16 @@
 # Enlace Factors Version History
 
+## 1.3
+Web Release: TBD
+Extension Release: TBD
+
+Added Features:
+- Converted temporary browser secret storage back to session from background script. The background script method is not reliable in manifest v3 and other versions are deprecated.
+- Added a possible fix to Okta MFA code storage in some contexts
+
 ## 1.2
 Web Release: 4.19.2026
-Extension Release: TBD
+Extension Release: 4.20.2026
 
 Added Features:
 - Change password form

@@ -34,6 +34,6 @@ Your master key is based on your password, salted with your email and a public p
 
 The encryption technologies used are: AES-GCM, SHA-265, and PBKDF2
 
-The browser extension (starting on version 1.1) stores your access credentials in the memory only (the background script) so they are not persistent or easily stolen. Your TOTPs are never stored client side, only accessible from AWS. 
+Your TOTPs are never stored client side in the web version or extension.
 
 You have the option on the browser extension to also encrypt the stored tokens with a unqiue PIN. That is required on the web version as session storage is used.
