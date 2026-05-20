@@ -1,7 +1,18 @@
 # SOCX Command Line Tool Version History
 
+## Version 2.5.0
+
+Published to pypi.org: 20 September 2026
+
+Published to test.pypi.org: 20 September 2026
+
+Includes many syntax changes as the package shifted to using the Typer interface. Other changes include:
+- The find command's smart search now iterates through folders in reverse starting from cwd and ignoring anything previously searched
+- There is a new command called Configure-pip which sets the minimum package day to 14 days and sets trusted hosts. This is to help reduce the concern of malicious packages. 
+
 ## Version 2.4.1
-Published to pypi.org: TBD
+
+Published to pypi.org: N/A
 
 Published to test.pypi.org: 2 November 2025
 
