@@ -1,5 +1,13 @@
 # SOCX Command Line Tool Version History
 
+## Version 2.5.1 
+
+Published to pypi.org: 21 September 2026
+
+Published to test.pypi.org: 21 September 2026
+
+Major bug fixes in new packing and deployment method and unified syntax for combine and awake. Reintroduced the awake restart flag.
+
 ## Version 2.5.0
 
 Published to pypi.org: 20 September 2026
