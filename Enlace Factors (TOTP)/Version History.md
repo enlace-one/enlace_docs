@@ -2,7 +2,7 @@
 
 ## 1.4
 Web Release: 5.24.2026
-Extension Release: 5.26.2026
+Extension Release: 5.24.2026
 
 Added Features:
 - Manual workaround if Okta registration fails due to CORS
