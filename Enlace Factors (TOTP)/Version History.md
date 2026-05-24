@@ -1,8 +1,19 @@
 # Enlace Factors Version History
 
+## 1.4
+Web Release: 5.24.2026
+Extension Release: 5.26.2026
+
+Added Features:
+- Manual workaround if Okta registration fails due to CORS
+
+Bug Fixes:
+- Autofill always says extension is locked
+
+
 ## 1.3
-Web Release: TBD
-Extension Release: TBD
+Web Release: 5.1.2026
+Extension Release: 5.1.2026
 
 Added Features:
 - Converted temporary browser secret storage back to session from background script. The background script method is not reliable in manifest v3 and other versions are deprecated.
