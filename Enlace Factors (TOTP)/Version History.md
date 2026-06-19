@@ -1,5 +1,12 @@
 # Enlace Factors Version History
 
+## 1.5
+Web Release: 6.19.2026
+Extension Release: N/A
+
+Added Features:
+- Added Enter button to pin code screen to allow usage on mobile devices
+
 ## 1.4
 Web Release: 5.24.2026
 Extension Release: 5.24.2026
