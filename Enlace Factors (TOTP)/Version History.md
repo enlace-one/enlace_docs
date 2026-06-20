@@ -1,5 +1,13 @@
 # Enlace Factors Version History
 
+## 1.6 
+Web Release: 6.20.2026
+Extension Release: N/A
+
+Bug Fixes:
+- Pin fix to issue causing pin to stop working after page refresh
+- Fix for Safari/iOS browsers
+
 ## 1.5
 Web Release: 6.19.2026
 Extension Release: N/A
