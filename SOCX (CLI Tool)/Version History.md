@@ -1,4 +1,4 @@
-# SOCX Command Line Tool Version History
+# socX Command Line Tool Version History
 
 ## Version 2.5.1 
 
