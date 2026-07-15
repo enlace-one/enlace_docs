@@ -2,17 +2,17 @@
 
 ## Version 2.5.1 
 
-Published to pypi.org: 21 September 2026
+Published to pypi.org: 21 June 2026
 
-Published to test.pypi.org: 21 September 2026
+Published to test.pypi.org: 21 June 2026
 
 Major bug fixes in new packing and deployment method and unified syntax for combine and awake. Reintroduced the awake restart flag.
 
 ## Version 2.5.0
 
-Published to pypi.org: 20 September 2026
+Published to pypi.org: 20 June 2026
 
-Published to test.pypi.org: 20 September 2026
+Published to test.pypi.org: 20 June 2026
 
 Includes many syntax changes as the package shifted to using the Typer interface. Other changes include:
 - The find command's smart search now iterates through folders in reverse starting from cwd and ignoring anything previously searched
